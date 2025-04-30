@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Performance-optimized launch file for Scout Mini on older hardware -->
+  
+  <!-- Set Gazebo physics parameters for better performance -->
+  <param name="/use_sim_time" value="true"/>
+  
+  <!-- Launch Gazebo with custom physics parameters -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- Reduce physics engine calculations -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+    
+    <!-- Performance optimization parameters -->
+    <arg name="extra_gazebo_args" value="--physics=ode --max_step_size=0.01 --real_time_update_rate=50 --ode_solver=quick"/>
+  </include>
+  
+  <!-- Load robot description from the existing package -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find scout_ros)/scout_description/urdf/scout_mini.urdf.xacro'" />
+  
+  <!-- Spawn the robot with reduced joint update rate -->
+  <node name="spawn_scout_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model scout_mini" output="screen"/>
+  
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_mini.urdf.xacro'" />  <!-- Load controllers with reduced update rates -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+    args="scout_state_controller scout_velocity_controller">
+    <param name="publish_rate" value="10.0"/> <!-- Reduced from standard 50Hz -->
+  </node>
+  
+  <!-- Convert joint states to TF transforms with reduced rates -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <param name="publish_frequency" value="10.0"/> <!-- Reduced from standard 50Hz -->
+  </node>
+  
+  <!-- Set environment variables for better performance -->
+  <env name="OGRE_RTT_MODE" value="Copy"/>
+  <env name="SVGA_VGPU10" value="0"/>
+</launch>

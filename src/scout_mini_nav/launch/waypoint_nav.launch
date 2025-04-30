@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch the Scout Mini simulation -->
+  <include file="$(find scout_gazebo_sim)/launch/scout_mini_empty_world.launch">
+    <arg name="world_name" value="$(find scout_mini_optimized)/worlds/agricultural_field.world"/>
+  </include>
+  
+  <!-- Launch waypoint navigation node after a delay to allow simulation to start -->
+  <node pkg="scout_mini_nav" type="waypoint_nav_node" name="waypoint_nav_node" 
+        output="screen" launch-prefix="bash -c 'sleep 10; $0 $@'">
+    <param name="waypoint_reached_distance" value="0.5" />
+    <param name="linear_speed" value="0.3" />
+    <param name="angular_speed" value="0.3" />
+    <param name="goal_tolerance" value="0.1" />
+  </node>
+</launch>

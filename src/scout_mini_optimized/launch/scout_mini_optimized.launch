@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Simple launch file that executes the original but with physics modifications -->
+
+  
+  <!-- Directly launch with command-line physics settings -->
+
+<node name="gazebo" pkg="gazebo_ros" type="gzserver" args="--verbose $(find scout_mini_optimized)/worlds/agricultural_field.world --physics=ode --max-step-size 0.05 --real-time-update-rate 10" required="true" output="screen"/>
+
+  <!-- Include everything else from the original launch file except gazebo itself -->
+  <include file="$(find scout_gazebo_sim)/launch/spawn_scout_mini.launch"/>
+  
+  <!-- Optional GUI with reduced quality -->
+  <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" args="--verbose" respawn="false" output="screen"/>
+</launch>
+

@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="agricultural_field">
+    <physics type="ode">
+      <max_step_size>0.015</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>30</real_time_update_rate>
+      <ode>
+        <solver>
+          <type>quick</type>
+        </solver>
+      </ode>
+    </physics>
+
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Agricultural terrain - a simple flat field -->
+    <model name="agricultural_field">
+      <static>true</static>
+      <link name="field_link">
+        <visual name="field_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>20 20</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grass</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Row markers for agricultural pattern -->
+    <model name="row_markers">
+      <static>true</static>
+      <link name="row_marker_1">
+        <visual name="row_visual_1">
+          <pose>5 2 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 0.1 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <link name="row_marker_2">
+        <visual name="row_visual_2">
+          <pose>5 4 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 0.1 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <link name="row_marker_3">
+        <visual name="row_visual_3">
+          <pose>5 6 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 0.1 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+      <link name="row_marker_4">
+        <visual name="row_visual_4">
+          <pose>5 8 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 0.1 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
