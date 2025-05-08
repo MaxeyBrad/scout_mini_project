@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Performance-optimized launch file for Scout Mini on older hardware -->
+  
+  <!-- Set Gazebo physics parameters for better performance -->
+  <param name="/use_sim_time" value="true"/>
+  <!-- Launch Gazebo with custom physics parameters -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+   <!-- Specify the world file -->
+  
+  <arg name="world_name" value="$(find scout_gazebo_sim)/worlds/empty.world"/>
+     
+
+   <!-- Reduce physics engine calculations -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+    
+    <!-- Performance optimization parameters -->
+    <arg name="extra_gazebo_args" value="--physics=ode --max_step_size=0.01 --real_time_update_rate=50 --ode_solver=quick"/>
+  </include>
+  
+  <!-- Load robot description -->
+  <!-- Using the path we know exists from your file listing -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find scout_description)/urdf/scout_mini.xacro'" />
+  
+  <!-- Spawn the robot with reduced joint update rate -->
+  <node name="spawn_scout_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model scout_mini" output="screen"/>
+  
+  <!-- Load the controllers with reduced update rates -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+    args="scout_state_controller scout_velocity_controller">
+    <param name="publish_rate" value="10.0"/> <!-- Reduced from standard 50Hz -->
+  </node>
+  
+  <!-- Convert joint states to TF transforms -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <param name="publish_frequency" value="10.0"/> <!-- Reduced from standard 50Hz -->
+  </node>
+  
+  <!-- Reduce simulation complexity for better performance -->
+  <param name="/gazebo/enable_gpu_ray" value="false"/>
+  <param name="/gazebo/use_gpu_ray" value="false"/>
+  
+  <!-- Set Gazebo's real-time factor target to be less demanding -->
+  <param name="/gazebo/time_step" value="0.01"/>
+  
+  <!-- Disable unnecessary visualization details -->
+  <param name="/gazebo/enable_shadows" value="false"/>
+  <param name="/gazebo/enable_dynamic_shadows" value="false"/>
+</launch>

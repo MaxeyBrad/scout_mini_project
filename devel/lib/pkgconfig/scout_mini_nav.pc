@@ -1,0 +1,8 @@
+prefix=/home/brad/catkin_ws/devel
+
+Name: scout_mini_nav
+Description: Description of scout_mini_nav
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp geometry_msgs nav_msgs tf
