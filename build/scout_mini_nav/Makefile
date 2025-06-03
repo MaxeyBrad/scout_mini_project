@@ -92,16 +92,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target test
+test/fast: test
 
-.PHONY : rebuild_cache/fast
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -114,6 +114,17 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -123,17 +134,6 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -228,66 +228,6 @@ nav_msgs_generate_messages_nodejs/fast:
 .PHONY : nav_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_lisp: scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/rule
-
-.PHONY : tf_generate_messages_lisp
-
-# fast build rule for target.
-tf_generate_messages_lisp/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/build.make scout_mini_nav/CMakeFiles/tf_generate_messages_lisp.dir/build
-.PHONY : tf_generate_messages_lisp/fast
-
-# Convenience name for target.
-scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-nav_msgs_generate_messages_py: scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
-
-.PHONY : nav_msgs_generate_messages_py
-
-# fast build rule for target.
-nav_msgs_generate_messages_py/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/build
-.PHONY : nav_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_cpp: scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/rule
-
-.PHONY : tf_generate_messages_cpp
-
-# fast build rule for target.
-tf_generate_messages_cpp/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/build.make scout_mini_nav/CMakeFiles/tf_generate_messages_cpp.dir/build
-.PHONY : tf_generate_messages_cpp/fast
-
-# Convenience name for target.
-scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_nodejs: scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/rule
-
-.PHONY : tf_generate_messages_nodejs
-
-# fast build rule for target.
-tf_generate_messages_nodejs/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/build.make scout_mini_nav/CMakeFiles/tf_generate_messages_nodejs.dir/build
-.PHONY : tf_generate_messages_nodejs/fast
-
-# Convenience name for target.
 scout_mini_nav/CMakeFiles/waypoint_nav_node.dir/rule:
 	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/waypoint_nav_node.dir/rule
 .PHONY : scout_mini_nav/CMakeFiles/waypoint_nav_node.dir/rule
@@ -303,49 +243,19 @@ waypoint_nav_node/fast:
 .PHONY : waypoint_nav_node/fast
 
 # Convenience name for target.
-scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/rule
+scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
+.PHONY : scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
 
 # Convenience name for target.
-tf_generate_messages_eus: scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/rule
+waypoint_follower_node: scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
 
-.PHONY : tf_generate_messages_eus
+.PHONY : waypoint_follower_node
 
 # fast build rule for target.
-tf_generate_messages_eus/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/build.make scout_mini_nav/CMakeFiles/tf_generate_messages_eus.dir/build
-.PHONY : tf_generate_messages_eus/fast
-
-# Convenience name for target.
-scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/rule
-
-# Convenience name for target.
-tf_generate_messages_py: scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/rule
-
-.PHONY : tf_generate_messages_py
-
-# fast build rule for target.
-tf_generate_messages_py/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/build.make scout_mini_nav/CMakeFiles/tf_generate_messages_py.dir/build
-.PHONY : tf_generate_messages_py/fast
-
-# Convenience name for target.
-scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
-
-# Convenience name for target.
-basic_waypoint_follower_node: scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
-
-.PHONY : basic_waypoint_follower_node
-
-# fast build rule for target.
-basic_waypoint_follower_node/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/build.make scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/build
-.PHONY : basic_waypoint_follower_node/fast
+waypoint_follower_node/fast:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/build.make scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/build
+.PHONY : waypoint_follower_node/fast
 
 # Convenience name for target.
 scout_mini_nav/CMakeFiles/simple_square_nav_node.dir/rule:
@@ -363,19 +273,34 @@ simple_square_nav_node/fast:
 .PHONY : simple_square_nav_node/fast
 
 # Convenience name for target.
-scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
-.PHONY : scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
+scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
+.PHONY : scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
 
 # Convenience name for target.
-waypoint_follower_node: scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/rule
+basic_waypoint_follower_node: scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/rule
 
-.PHONY : waypoint_follower_node
+.PHONY : basic_waypoint_follower_node
 
 # fast build rule for target.
-waypoint_follower_node/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/build.make scout_mini_nav/CMakeFiles/waypoint_follower_node.dir/build
-.PHONY : waypoint_follower_node/fast
+basic_waypoint_follower_node/fast:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/build.make scout_mini_nav/CMakeFiles/basic_waypoint_follower_node.dir/build
+.PHONY : basic_waypoint_follower_node/fast
+
+# Convenience name for target.
+scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
+.PHONY : scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+nav_msgs_generate_messages_py: scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/rule
+
+.PHONY : nav_msgs_generate_messages_py
+
+# fast build rule for target.
+nav_msgs_generate_messages_py/fast:
+	cd /home/brad/catkin_ws/build && $(MAKE) -f scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/build.make scout_mini_nav/CMakeFiles/nav_msgs_generate_messages_py.dir/build
+.PHONY : nav_msgs_generate_messages_py/fast
 
 src/basic_waypoint_follower.o: src/basic_waypoint_follower.cpp.o
 
@@ -494,24 +419,19 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_cpp"
 	@echo "... nav_msgs_generate_messages_lisp"
 	@echo "... nav_msgs_generate_messages_nodejs"
-	@echo "... tf_generate_messages_lisp"
-	@echo "... list_install_components"
-	@echo "... nav_msgs_generate_messages_py"
-	@echo "... tf_generate_messages_cpp"
-	@echo "... tf_generate_messages_nodejs"
 	@echo "... waypoint_nav_node"
-	@echo "... tf_generate_messages_eus"
-	@echo "... tf_generate_messages_py"
-	@echo "... basic_waypoint_follower_node"
-	@echo "... simple_square_nav_node"
-	@echo "... test"
 	@echo "... waypoint_follower_node"
+	@echo "... test"
+	@echo "... simple_square_nav_node"
+	@echo "... basic_waypoint_follower_node"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... nav_msgs_generate_messages_py"
+	@echo "... list_install_components"
 	@echo "... src/basic_waypoint_follower.o"
 	@echo "... src/basic_waypoint_follower.i"
 	@echo "... src/basic_waypoint_follower.s"

@@ -68,18 +68,6 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -135,6 +123,18 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /home/brad/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/brad/catkin_ws/build/CMakeFiles /home/brad/catkin_ws/build/ugv_gazebo_sim/scout/scout_description/CMakeFiles/progress.marks
@@ -166,21 +166,6 @@ preinstall/fast:
 depend:
 	cd /home/brad/catkin_ws/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-# Convenience name for target.
-ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
-.PHONY : ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# fast build rule for target.
-_catkin_empty_exported_target/fast:
-	cd /home/brad/catkin_ws/build && $(MAKE) -f ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make ugv_gazebo_sim/scout/scout_description/CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
 
 # Convenience name for target.
 ugv_gazebo_sim/scout/scout_description/CMakeFiles/run_tests_scout_description.dir/rule:
@@ -294,8 +279,6 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install/local"
-	@echo "... _catkin_empty_exported_target"
 	@echo "... run_tests_scout_description"
 	@echo "... run_tests_scout_description_roslaunch-check_launch"
 	@echo "... list_install_components"
@@ -308,6 +291,7 @@ help:
 	@echo "... run_tests_scout_description_roslaunch-check"
 	@echo "... _run_tests_scout_description_roslaunch-check"
 	@echo "... _run_tests_scout_description_roslaunch-check_launch"
+	@echo "... install/local"
 .PHONY : help
 
 
